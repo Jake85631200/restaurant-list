@@ -5,6 +5,9 @@ const app = express()
 // 設定路由
 const port = 3000
 
+// 將請求的 URL 與指定的路徑結合，以定位並返回相應的靜態資源文件。
+app.use(express.static('public'))
+
 app.get('/', (req, res) => {
   res.send('this a restaurant-listing website!')
 })
