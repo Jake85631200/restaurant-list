@@ -1,11 +1,10 @@
 // 載入 Express
 const express = require('express')
 const { engine } = require('express-handlebars')
-
 const app = express()
-
 // 設定路由
 const port = 3000
+const restaurants = require('./public/jsons/restaurant.json').results
 
 app.engine('.hbs', engine({ extname: '.hbs' })) // extname: handlebars 的功能，用來指定樣版引使用的擴充文件名
 app.set('view engine', '.hbs')
@@ -20,7 +19,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/restaurant', (req, res) => {
-  res.render('index')
+  // { A : B }: A 是視圖模板中可以訪問的變量名稱，而 B 是你要傳遞給視圖模板的實際數據。
+  res.render('index', { restaurants: restaurants })
 })
 
 // 使用 params 做動態路由
