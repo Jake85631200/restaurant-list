@@ -19,14 +19,23 @@ app.get('/', (req, res) => {
 })
 
 app.get('/restaurants', (req, res) => {
+  const keyword = req.query.keyword?.trim()
+  const matchedRestaurant = keyword ? restaurants.filter((store) =>
+    Object.values(store).some((property) => {
+      if (typeof property === 'string') {
+        return property.toLowerCase().includes(keyword.toLowerCase())
+      }
+      return false
+    })
+  ) : restaurants
   // { A : B }: A 是視圖模板中可以訪問的變量名稱，而 B 是你要傳遞給視圖模板的實際數據。
-  res.render('index', { restaurants: restaurants })
+  res.render('index', { restaurants: matchedRestaurant, keyword })
 })
 
 // 使用 params 做動態路由
 app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
-  const restaurant = restaurants.find((food) =>  food.id.toString() === id )
+  const restaurant = restaurants.find((store) => store.id.toString() === id)
   res.render('detail', { restaurant })
 })
 
