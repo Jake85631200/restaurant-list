@@ -15,10 +15,10 @@ app.use(express.static('public'))
 
 // 將根路徑重新導向至restaurant.json
 app.get('/', (req, res) => {
-  res.redirect('/restaurant')
+  res.redirect('/restaurants')
 })
 
-app.get('/restaurant', (req, res) => {
+app.get('/restaurants', (req, res) => {
   // { A : B }: A 是視圖模板中可以訪問的變量名稱，而 B 是你要傳遞給視圖模板的實際數據。
   res.render('index', { restaurants: restaurants })
 })
@@ -26,7 +26,8 @@ app.get('/restaurant', (req, res) => {
 // 使用 params 做動態路由
 app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
-  res.send(`reading restaurant id: ${id}`)
+  const restaurant = restaurants.find((food) =>  food.id.toString() === id )
+  res.render('detail', { restaurant })
 })
 
 // 用來啟動伺服器
