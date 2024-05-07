@@ -19,7 +19,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/restaurants', (req, res) => {
-  const keyword = req.query.keyword?.trim()
+  // index.hbs 的 <input name='keyword'> ，name 將用於識別該字段的值，因此為 req.query.keyword 而非教案的 req.query.search
+  const keyword = req.query.keyword?.trim() 
   const matchedRestaurant = keyword ? restaurants.filter((store) =>
     Object.values(store).some((property) => {
       if (typeof property === 'string') {
